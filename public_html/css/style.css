@@ -9,3 +9,58 @@ and open the template in the editor.
  *  GitHub     : https://github.com/mariuszKrzysztofPrzybysz
 */
 
+* {
+    box-sizing: border-box;   
+}
+
+table {
+    margin: 0 auto;
+    background-color: #0077b3;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.on {
+    color: white;
+}
+
+.off {
+    color: black;
+}
+#power {
+    background-color: red;
+}
+
+td{
+    width: 75px;
+    background-color: black;
+    border-radius: 10px;
+    height: 50px;
+    
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.digit {
+    background-color: #474a4f;
+}
+
+input ,textarea{
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+    text-align: right;
+    padding: 5px;
+    background-color: #09cbfc;
+    border-radius: 10px;
+    outline: none;
+}
+
+textarea {
+    resize: none;
+}
+
+#execute {
+    background-color: #185acc;
+}
