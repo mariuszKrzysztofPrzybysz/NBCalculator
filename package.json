@@ -2,7 +2,7 @@
     "name": "NBCalculator",
     "version": "1.0.0",
     "keywords": ["util", "functional", "server", "client", "browser"],
-    "author": "mprzybysz",
+    "author": "Mariusz Krzysztof Przybysz",
     "contributors": [],
     "dependencies": {}
 }
