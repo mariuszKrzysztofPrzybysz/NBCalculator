@@ -11,69 +11,70 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Calculator</title>
         <meta charset="UTF-8">
-        <meta name="author" content="" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
+        <meta name="author" content="Mariusz Przybysz, Shota Mamulashivi" />
+        <meta name="description" content="calculator" />
+        <meta name="keywords" content="html, css, js" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/style.css" />
         <script type="text/javascript" src="js/script.js"></script>
     </head>
     <body>
-        <table class="on">
+        <table id="on">
             <thead>
                 <tr>
-                    <td colspan="4"><input type="text"/></td>
+                    <td colspan="4"><input id="result" type="text"/></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><textarea rows="3" readonly></textarea></td>
+                    <td colspan="4"><textarea id="historyOfCalculations" rows="3"></textarea></td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td id="power" colspan="2">&#9435;</td>
-                    <td colspan="2">&larr;</td>
+                    <td class="memory" title="Zapisanie liczby znajdującej się na wyświetlaczu do pamięci i jej odczyt">MR</td>
+                    <td class="memory" title="Kasowanie pamięci">MC</td>
+                    <td class="memory" title="Dodanie do liczby w pamięci liczby znajdującej się aktualnie na wyświetlaczu">M+</td>
+                    <td class="memory" title="Odjęcie od liczby w pamięci liczby znajdującej się aktualnie na wyświetlaczu">M-</td>
                 </tr>
                 <tr>
-                    <td>MR</td>
-                    <td>MC</td>
-                    <td>M+</td>
-                    <td>M-</td>
-                </tr>
-                <tr>
-                    <td>n!</td>
-                    <td>&radic;</td>
-                    <td>%</td>
-                    <td>&divide;</td>
+                    <td class="dyadicOperator" id="factorialOperator" title="Silnia">n!</td>
+                    <td class="binaryOperator" id="moduloOperator" title="Reszta z dzielenia">%</td>
+                    <td class="dyadicOperator" id="rootOperator">&radic;</td>
+                    <td class="binaryOperator" id="divisionOperator">&divide;</td>
                 </tr>
                 <tr>
                     <td class="digit">7</td>
                     <td class="digit">8</td>
                     <td class="digit">9</td>
-                    <td>&times;</td>
+                    <td class="binaryOperator" id="multiplicationOperator">&times;</td>
                 </tr>
                 <tr>
                     <td class="digit">4</td>
                     <td class="digit">5</td>
                     <td class="digit">6</td>
-                    <td>-</td>
+                    <td class="binaryOperator" id="subtractionOperator">-</td>
                 </tr>
                 <tr>
                     <td class="digit">1</td>
                     <td class="digit">2</td>
                     <td class="digit">3</td>
-                    <td rowspan="2">+</td>
+                    <td class="binaryOperator" id="additionOperator">+</td>
                 </tr>
                 <tr>
                     <td class="digit">0</td>
-                    <td>,</td>
+                    <td id="dot">,</td>
+                    <td id="delete">&larr;</td>
                     <td id="execute">=</td>
+                </tr>
+                <tr>
+                    <td id="powerButton" colspan="4">&#9435;</td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="4">Author</td>
+                    <td colspan="4">JS &amp; HTML: Mariusz Przybysz<br/>
+                        HTML &amp; CSS: Shota Mamulashili</td>
                 </tr>
             </tfoot>
         </table>
