@@ -24,51 +24,51 @@ and open the template in the editor.
         <table id="on">
             <thead>
                 <tr>
-                    <td colspan="4"><input id="result" type="text"/></td>
+                    <td colspan="4"><input id="resultInput" type="text"/></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><textarea id="historyOfCalculations" rows="3"></textarea></td>
+                    <td colspan="4"><textarea id="historyOfCalculations" rows="5" placeholder="Historia operacji"></textarea></td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="memory" title="Zapisanie liczby znajdującej się na wyświetlaczu do pamięci i jej odczyt">MR</td>
-                    <td class="memory" title="Kasowanie pamięci">MC</td>
-                    <td class="memory" title="Dodanie do liczby w pamięci liczby znajdującej się aktualnie na wyświetlaczu">M+</td>
-                    <td class="memory" title="Odjęcie od liczby w pamięci liczby znajdującej się aktualnie na wyświetlaczu">M-</td>
+                    <td class="memoryKey" title="Zapisanie liczby znajdującej się na wyświetlaczu do pamięci i jej odczyt">MR</td>
+                    <td class="memoryKey" title="Czyszczenie pamięci oraz historii operacji">MC</td>
+                    <td class="memoryKey" title="Dodanie do liczby w pamięci liczby znajdującej się aktualnie na wyświetlaczu">M+</td>
+                    <td class="memoryKey" title="Odjęcie od liczby w pamięci liczby znajdującej się aktualnie na wyświetlaczu">M-</td>
                 </tr>
                 <tr>
-                    <td class="dyadicOperator" id="factorialOperator" title="Silnia">n!</td>
-                    <td class="binaryOperator" id="moduloOperator" title="Reszta z dzielenia">%</td>
-                    <td class="dyadicOperator" id="rootOperator">&radic;</td>
-                    <td class="binaryOperator" id="divisionOperator">&divide;</td>
+                    <td class="dyadicOperatorKey" id="factorialOperator" title="Silnia">!</td>
+                    <td class="binaryOperatorKey" id="modulusOperator" title="Reszta z dzielenia">%</td>
+                    <td class="dyadicOperatorKey" id="rootOperator">&radic;</td>
+                    <td class="binaryOperatorKey" id="divisionOperator">&divide;</td>
                 </tr>
                 <tr>
-                    <td class="digit">7</td>
-                    <td class="digit">8</td>
-                    <td class="digit">9</td>
-                    <td class="binaryOperator" id="multiplicationOperator">&times;</td>
+                    <td class="digitKey">7</td>
+                    <td class="digitKey">8</td>
+                    <td class="digitKey">9</td>
+                    <td class="binaryOperatorKey" id="multiplicationOperator">&times;</td>
                 </tr>
                 <tr>
-                    <td class="digit">4</td>
-                    <td class="digit">5</td>
-                    <td class="digit">6</td>
-                    <td class="binaryOperator" id="subtractionOperator">-</td>
+                    <td class="digitKey">4</td>
+                    <td class="digitKey">5</td>
+                    <td class="digitKey">6</td>
+                    <td class="binaryOperatorKey" id="subtractionOperator">-</td>
                 </tr>
                 <tr>
-                    <td class="digit">1</td>
-                    <td class="digit">2</td>
-                    <td class="digit">3</td>
-                    <td class="binaryOperator" id="additionOperator">+</td>
+                    <td class="digitKey">1</td>
+                    <td class="digitKey">2</td>
+                    <td class="digitKey">3</td>
+                    <td class="binaryOperatorKey" id="additionOperator">+</td>
                 </tr>
                 <tr>
-                    <td class="digit">0</td>
-                    <td id="dot">,</td>
-                    <td id="delete">&larr;</td>
-                    <td id="execute">=</td>
+                    <td class="digitKey">0</td>
+                    <td id="dotKey">,</td>
+                    <td id="deleteKey">&larr;</td>
+                    <td id="executeKey">=</td>
                 </tr>
                 <tr>
-                    <td id="powerButton" colspan="4">&#9435;</td>
+                    <td id="powerKey" colspan="4">&#9435;</td>
                 </tr>
             </tbody>
             <tfoot>

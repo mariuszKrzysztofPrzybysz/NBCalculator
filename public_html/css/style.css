@@ -18,38 +18,34 @@ table {
     background-color: #0077b3;
     border-radius: 10px;
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
-.on {
+#on {
     color: white;
 }
 
-.off {
-    color: black;
-}
-#power {
+#powerKey {
     background-color: red;
 }
 
 td{
     width: 75px;
-    background-color: black;
+    background-color: #262626;
     border-radius: 10px;
     height: 50px;
-    
     cursor: pointer;
     font-weight: bold;
 }
 
-.digit {
-    background-color: #474a4f;
+tbody td:hover{
+    background-color: gray;
 }
 
 input ,textarea{
     width: 100%;
     height: 100%;
-    font-size: 30px;
+    font-size: 1.1em;
     text-align: right;
     padding: 5px;
     background-color: #09cbfc;
@@ -59,8 +55,5 @@ input ,textarea{
 
 textarea {
     resize: none;
-}
-
-#execute {
-    background-color: #185acc;
+    overflow: hidden;
 }
