@@ -18,16 +18,17 @@ and open the template in the editor.
         <meta name="keywords" content="html, css, js" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/style.css" />
+        <script type="text/javascript" src="js/funtions.js"></script>
         <script type="text/javascript" src="js/script.js"></script>
     </head>
     <body>
-        <table id="on">
+        <table>
             <thead>
                 <tr>
-                    <td colspan="4"><input id="resultInput" type="text"/></td>
+                    <td colspan="4"><input id="resultInput" type="text" title="Kliknij dwuktrotnie aby wyczyścić" readonly/></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><textarea id="historyOfCalculations" rows="5" placeholder="Historia operacji"></textarea></td>
+                    <td colspan="4"><textarea id="historyOfCalculations" rows="5" placeholder="Historia operacji" title="Kliknij dwuktrotnie aby wyczyścić" readonly></textarea></td>
                 </tr>
             </thead>
             <tbody>
@@ -39,8 +40,8 @@ and open the template in the editor.
                 </tr>
                 <tr>
                     <td class="dyadicOperatorKey" id="factorialOperator" title="Silnia">!</td>
-                    <td class="binaryOperatorKey" id="modulusOperator" title="Reszta z dzielenia">%</td>
                     <td class="dyadicOperatorKey" id="rootOperator">&radic;</td>
+                    <td class="binaryOperatorKey" id="modulusOperator" title="Reszta z dzielenia">%</td>
                     <td class="binaryOperatorKey" id="divisionOperator">&divide;</td>
                 </tr>
                 <tr>

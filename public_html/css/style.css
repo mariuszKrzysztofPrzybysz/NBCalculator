@@ -21,7 +21,7 @@ table {
     font-size: 1.1em;
 }
 
-#on {
+.on {
     color: white;
 }
 
@@ -55,5 +55,4 @@ input ,textarea{
 
 textarea {
     resize: none;
-    overflow: hidden;
 }

@@ -13,17 +13,20 @@ var calculator = {
     execute: null,
     calculations: null,
     result: null,
+    delete: null,
+    isOn: false,
 
     setDefaultValues: function () {
         this.firtsNumber = null;
         this.secondNumber = null;
         this.operationSign = "";
         this.innerMemory = null;
-        this.maxNumberOfDigits = 8;
 
         this.errorUnknownKey = 'Key?';
-        this.errorMessage = "Error"; //(-4)!, sqrt(-2), 12%0, 13/0
-        this.errorOutOfMemoryMessage = "Out of memory";
+        this.errorInvalidOperation = "Invalid operation"; //(-4)!, sqrt(-2), 12%0, 13/0
+
+        this.calculations.value = '';
+        calculator.result.value = '';
     },
 
     toNumber: function (value) {
@@ -48,6 +51,14 @@ var calculator = {
         this.execute = document.querySelector('#executeKey');
         this.calculations = document.querySelector('#historyOfCalculations');
         this.result = document.querySelector('#resultInput');
+        this.delete = document.querySelector('#deleteKey');
+    },
+
+    eventForResult: function () {
+        this.value = '';
+    },
+    eventForOperations: function () {
+        this.value = '';
     },
     eventForMemoryKey: function () {
         switch (this.innerText) {
@@ -61,7 +72,7 @@ var calculator = {
                 break;
             case "MC":
                 calculator.innerMemory = null;
-                calculator.calculations.innerHTML = '';
+                //calculator.calculations.value = '';
                 break;
             case "M+":
                 if (isNaN(calculator.result.value) === false) {
@@ -84,65 +95,111 @@ var calculator = {
                 break;
         }
         if (calculator.innerMemory !== null) {
-            calculator.calculations.innerHTML
-                    += 'Pamięć: ' + calculator.innerMemory.toString() + '\n';
+            calculator.calculations.value
+                    = 'Pamięć: ' + calculator.innerMemory + '\n'
+                    + calculator.calculations.value;
         } else {
-            calculator.calculations.innerHTML
-                    += 'Pamięć: null\n';
+            calculator.calculations.value
+                    = 'Pamięć: wyczyszczono' + '\n'
+                    + calculator.calculations.value;
         }
     },
     eventForDyadicOperatorKey: function () {
         var number = calculator.toNumber(calculator.result.value);
         switch (this.id) {
-            case 'rootOperator':
-                if (number >= 0) {
-                    /*
-                     * Metoda toPrecision wywoływana na obiekcie number z parametrem
-                     * calculator.maxNumberOfDigits zwraca zaokrąglenie liczby
-                     * za pomocą maxNumberOfDigits cyfr np:
-                     * ad. 1) sqrt(2): 1.4142136
-                     * ale 
-                     * ad. 2) sqrt(4): 2.0000000
-                     * Aby rozwiązać problem ad. 2 stosujemy metodę Number
-                     */
-                    calculator.result.value = Number(Math.sqrt(number).toPrecision(calculator.maxNumberOfDigits));
-                } else {
-                    calculator.result.value = calculator.errorMessage;
-                }
-                calculator.calculations.innerHTML += this.innerText + '(' + number + ')' + ': '
-                        + calculator.result.value + '\n';
-                break;
             case 'factorialOperator':
-                //Sprawdzenie, czy number jest liczbą naturalną
-                if (number < 0 || Math.floor(number) !== number) {
-                    calculator.result.value = calculator.errorMessage;
-                } else {
+                //Badanie, czy number jest liczbą naturalną
+                if (number >= 0 && Math.floor(number) !== number) {
+                    //Obliczanie silni
                     var r = 1;
                     for (var i = 1; i <= number; i++) {
                         r *= i;
                     }
                     calculator.result.value = r;
+
+                } else {
+                    calculator.result.value = calculator.errorInvalidOperation;
                 }
-                calculator.calculations.innerHTML +=
-                        '(' + number + ')' + '!: ' + calculator.result.value;
+                //Wydruk operacji postaci (number)!: result
+                calculator.calculations.value =
+                        '(' + number + ')' + '!: ' + calculator.result.value + '\n'
+                        + calculator.calculations.value;
+                break;
+            case 'rootOperator':
+                if (number >= 0) {
+                    //Liczenie pierwiastka kwadratowego z liczby nieujemnej
+                    calculator.result.value = calculator.toNumber(Math.sqrt(number));
+                } else {
+                    calculator.result.value = calculator.errorInvalidOperation;
+                }
+                //Wydruk operacji postaci sqrt(number): result
+                calculator.calculations.value = this.innerText + '(' + number + ')' + ': '
+                        + calculator.result.value + '\n'
+                        + calculator.calculations.value;
                 break;
             default:
                 console.log(this.errorUnknownKey);
                 break;
         }
     },
+    eventForDigitKey: function () {
+        if (isNaN(calculator.result.value) && calculator.result.value !== "-") {
+            calculator.result.value = this.innerText;
+        }
+        calculator.result.value += this.innerText;
+    },
+    eventForDotKey: function () {
+        if (calculator.result.value === "") {
+            calculator.result.value = "0.";
+        } else if (calculator.result.value.indexOf(".") === -1) {
+            calculator.result.value += ".";
+        }
+    },
+    calculateResult: function (fN, oS, sN) {
+        var result = null;
+        switch (oS) {
+            case "%":
+                if (Math.floor(fN) === fN
+                        && Math.floor(sN) === sN
+                        && sN !== 0) {
+                    result = fN % sN;
+                }
+                break;
+            case "/":
+                if (sN !== 0) {
+                    result = fN / sN;
+                }
+                break;
+            case "*":
+                result = fN * sN;
+                break;
+            case "-":
+                result = fN - sN;
+                break;
+            case "+":
+                result = fN + sN;
+                break;
+        }
+        return result;
+    },
     eventForBinaryOperatorKey: function () {
         // modulo, dzielenie, mnożenie, odejmowanie, dodawanie
         if (calculator.result.value !== "") {
             if (calculator.firtsNumber === null) {
                 calculator.firtsNumber = calculator.toNumber(calculator.result.value);
-                console.log(calculator.firtsNumber);
-                calculator.result.value = "";
                 calculator.operationSign = this.innerText;
+                calculator.calculations.value = calculator.firtsNumber + '\n'
+                        + calculator.operationSign + '\n'
+                        + calculator.calculations.value;
+                calculator.result.value = "";
             } else {
                 calculator.secondNumber = calculator.toNumber(calculator.result.value);
-                calculator.eventForExecuteKey();
+
+                calculator.firtsNumber = calculator.toNumber(calculator.calculateResult(calculator.firtsNumber,
+                        calculator.operationSign, calculator.secondNumber));
+                calculator.calculations.value = 'Wynik: ' + calculator.firtsNumber + '\n';
                 calculator.operationSign = this.innerText;
+                calculator.secondNumber = null;
             }
         }
         //na wyświetlaczu nic nie ma oraz urzytkownik wcisnął znak minus
@@ -150,35 +207,7 @@ var calculator = {
             calculator.result.value = "-";
         }
     },
-    eventForDigitKey: function () {
-        /*W przypadku, gdy na wyświetlaczu otrzymamy komunikat o błędzie
-         oraz nie jest to znak minus
-         */
-        if (isNaN(calculator.result.value) && calculator.result.value !== "-") {
-            calculator.result.value = this.innerText;
-        }
-        //TODO: Dodać komentarz
-        var numberOfDotAndMinusSign = 0;
-        numberOfDotAndMinusSign += (calculator.result.value.indexOf('.') === -1 ? 0 : 1);
-        numberOfDotAndMinusSign += (calculator.result.value.indexOf('-') === -1 ? 0 : 1);
-        if (calculator.result.value.length
-                - numberOfDotAndMinusSign
-                + this.innerText.length <= calculator.maxNumberOfDigits) {
-            calculator.result.value += this.innerText;
-        }
-    },
-    eventForDotKey: function () {
-        if (calculator.result.value === "") {
-            calculator.result.value = "0.";
-        } else if (isNaN(calculator.result.value + ".0") === false) {
-            calculator.result.value += ".";
-        } else {
-            ;
-        }
-    },
-
     eventForExecuteKey: function () {
-        //TODO: Przemyśleć działanie funkcji
         if (calculator.result.value !== "") {
             if (calculator.firtsNumber === null) {
                 calculator.firtsNumber = Number(calculator.result.value);
@@ -186,6 +215,7 @@ var calculator = {
                 calculator.secondNumber = Number(calculator.result.value);
             }
             var r = null;
+
             switch (calculator.operationSign) {
                 case "%":
                     if (Math.floor(calculator.firtsNumber) === calculator.firtsNumber
@@ -193,12 +223,12 @@ var calculator = {
                             && calculator.secondNumber !== 0) {
                         r = calculator.firtsNumber % calculator.secondNumber;
                     } else {
-                        r = calculator.errorMessage;
+                        r = calculator.errorInvalidOperation;
                     }
                     break;
                 case "/":
                     if (calculator.secondNumber === 0) {
-                        r = calculator.errorMessage;
+                        r = calculator.errorInvalidOperation;
                     } else {
                         r = calculator.firtsNumber / calculator.secondNumber;
                     }
@@ -215,18 +245,22 @@ var calculator = {
                 default:
                     ;
             }
-            //Obsłużyć > maxNumberOfDigits
             if (r !== null) {
                 calculator.result.value = calculator.toNumber(r);
                 calculator.firtsNumber = null;
                 calculator.secondNumber === null;
                 calculator.operationSign = "";
-                console.log("initExecute");
             }
         }
     },
+    eventForDeleteKey: function () {
+        calculator.result.value = calculator.result.value.slice(0, -1);
+    },
+
     activateAllEvents: function () {
-        //this.setDefaultValues();
+        this.setDefaultValues();
+        this.result.addEventListener('dblclick', this.eventForResult, false);
+        this.calculations.addEventListener('dblclick', this.eventForOperations, false);
         for (var index = 0; index < this.memory.length; index++) {
             this.memory[index].addEventListener('click',
                     this.eventForMemoryKey, false);
@@ -245,8 +279,12 @@ var calculator = {
         }
         this.dot.addEventListener('click', this.eventForDotKey, false);
         this.execute.addEventListener('click', this.eventForExecuteKey, false);
+        this.delete.addEventListener('click', this.eventForDeleteKey, false);
     },
     deactivateAllEvents: function () {
+        this.setDefaultValues();
+        this.result.removeEventListener('dblclick', this.eventForResult, false);
+        this.calculations.removeEventListener('dblclick', this.eventForOperations, false);
         for (var index = 0; index < this.memory.length; index++) {
             this.memory[index].removeEventListener('click',
                     this.eventForMemoryKey, false);
@@ -264,14 +302,30 @@ var calculator = {
         }
         this.dot.removeEventListener('click', this.eventForDotKey, false);
         this.execute.removeEventListener('click', this.eventForExecuteKey, false);
+        this.delete.removeEventListener('click', this.eventForDeleteKey, false);
     },
+
     run: function () {
         this.connectWithAll();
-        this.setDefaultValues();
-        this.activateAllEvents();
     }
 };
 
 window.onload = function () {
     calculator.run();
+    var powerKey = document.querySelector('#powerKey');
+    powerKey.addEventListener('click', function () {
+        var table = document.querySelector('table');
+
+        if (!calculator.isOn) {
+            calculator.activateAllEvents();
+            table.classList.add('on');
+        } else {
+            table.classList.remove('on');
+            calculator.deactivateAllEvents();
+        }
+        calculator.isOn = !calculator.isOn;
+    }, false);
+    
+    console.log(calculator.calculateResult(423,'-',3));
 };
+
