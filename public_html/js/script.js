@@ -188,24 +188,29 @@ var calculator = {
             if (calculator.firtsNumber === null) {
                 calculator.firtsNumber = calculator.toNumber(calculator.result.value);
                 calculator.operationSign = this.innerText;
-                calculator.calculations.value = calculator.firtsNumber + '\n'
-                        + calculator.operationSign + '\n'
+                calculator.calculations.value = calculator.operationSign + '\n'
+                        + calculator.firtsNumber + '\n'
                         + calculator.calculations.value;
                 calculator.result.value = "";
             } else {
+                console.log('fn',calculator.firtsNumber,'typeof',typeof(calculator.firtsNumber));
+                console.log('os',calculator.operationSign,'typeof',typeof(calculator.operationSign));
+                
                 calculator.secondNumber = calculator.toNumber(calculator.result.value);
-
+                console.log('sn',calculator.secondNumber,'typeof',typeof(calculator.secondNumber));
                 calculator.firtsNumber = calculator.toNumber(calculator.calculateResult(calculator.firtsNumber,
                         calculator.operationSign, calculator.secondNumber));
-                calculator.calculations.value = 'Wynik: ' + calculator.firtsNumber + '\n';
+                
                 calculator.operationSign = this.innerText;
+                console.log("Wynik: ", calculator.firtsNumber);
                 calculator.secondNumber = null;
             }
         }
-        //na wyświetlaczu nic nie ma oraz urzytkownik wcisnął znak minus
-        else if (this.innerText === "-") {
-            calculator.result.value = "-";
-        }
+        /*
+         if (this.innerText === "-") {
+         calculator.result.value = "-";
+         }
+         */
     },
     eventForExecuteKey: function () {
         if (calculator.result.value !== "") {
@@ -325,7 +330,5 @@ window.onload = function () {
         }
         calculator.isOn = !calculator.isOn;
     }, false);
-    
-    console.log(calculator.calculateResult(423,'-',3));
 };
 
