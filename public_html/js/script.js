@@ -200,7 +200,16 @@ var calculator = {
         }
     },
     eventForExecuteKey: function () {
-        
+        if (calculator.previousNumber !== null
+                && calculator.operationSign != null
+                && !isNaN(calculator.result.value)) {
+            calculator.calculations.value = 'Wynik: ' + calculator.calculateResult(calculator.previousNumber,
+                    calculator.operationSign,
+                    calculator.toNumber(calculator.result.value));
+            calculator.previousNumber = null;
+            calculator.operationSign = null;
+            calculator.result.value = '';
+        }
     },
     eventForDeleteKey: function () {
         calculator.result.value = calculator.result.value.slice(0, -1);
