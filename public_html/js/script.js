@@ -196,7 +196,6 @@ var calculator = {
                 calculator.result.value = '';
                 calculator.operationSign = this.innerText;
             }
-
         }
     },
     eventForExecuteKey: function () {
@@ -280,4 +279,3 @@ window.onload = function () {
         calculator.isOn = !calculator.isOn;
     }, false);
 };
-
