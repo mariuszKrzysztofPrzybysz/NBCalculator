@@ -1,5 +1,5 @@
 /* 
- *  Created on : 2017-02-21, 11:59:06
+ *  Created on : 2017-02-18, 11:59:06
  *  Author     : Mariusz Krzysztof Przybysz
  *  GitHub     : https://github.com/mariuszKrzysztofPrzybysz
  */
@@ -103,7 +103,7 @@ var calculator = {
         switch (this.id) {
             case 'factorialOperator':
                 //Badanie, czy number jest liczbą naturalną
-                if (number >= 0 && Math.floor(number) !== number) {
+                if (number >= 0 && Math.floor(number) === number) {
                     //Obliczanie silni
                     var r = 1;
                     for (var i = 1; i <= number; i++) {
@@ -134,6 +134,7 @@ var calculator = {
                 console.log(this.errorUnknownKey);
                 break;
         }
+        calculator.result.value = '';
     },
     eventForDigitKey: function () {
         if (isNaN(calculator.result.value) && calculator.result.value !== "-") {
@@ -182,17 +183,20 @@ var calculator = {
                 calculator.result.value = '-';
             }
         } else {
-            //Na wyświetlaczu jest liczba
             if (calculator.previousNumber === null) {
                 calculator.previousNumber = calculator.toNumber(calculator.result.value);
                 calculator.operationSign = this.innerText;
                 calculator.result.value = '';
+                //calculator.calculations.value = calculator.operationSign
+                //        + '\n'
+                //        + calculator.previousNumber;
             } else {
-                console.log(calculator.previousNumber, calculator.operationSign, calculator.toNumber(calculator.result.value));
                 calculator.previousNumber = calculator.calculateResult(calculator.previousNumber,
                         calculator.operationSign,
                         calculator.toNumber(calculator.result.value));
-                calculator.calculations.value = 'Wynik: ' + calculator.previousNumber;
+                calculator.calculations.value = 'Wynik: ' + calculator.previousNumber
+                        + '\n'
+                        + calculator.calculations.value;
                 calculator.result.value = '';
                 calculator.operationSign = this.innerText;
             }
@@ -200,7 +204,7 @@ var calculator = {
     },
     eventForExecuteKey: function () {
         if (calculator.previousNumber !== null
-                && calculator.operationSign != null
+                && calculator.operationSign !== null
                 && !isNaN(calculator.result.value)) {
             calculator.calculations.value = 'Wynik: ' + calculator.calculateResult(calculator.previousNumber,
                     calculator.operationSign,
