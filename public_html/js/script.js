@@ -207,7 +207,10 @@ var calculator = {
         if (calculator.previousNumber !== null
                 && calculator.operationSign !== null
                 && !isNaN(calculator.result.value)) {
-            calculator.calculations.value = 'Wynik: ' + calculator.calculateResult(calculator.previousNumber,
+            var temp = '(' + calculator.previousNumber + ')'
+                        + calculator.operationSign
+                        + '(' + calculator.result.value + '): ';
+            calculator.calculations.value = temp + calculator.calculateResult(calculator.previousNumber,
                     calculator.operationSign,
                     calculator.toNumber(calculator.result.value));
             calculator.previousNumber = null;
