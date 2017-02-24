@@ -16,6 +16,14 @@ var calculator = (function () {
     var _result = null;
     var _backspace = null;
     var _isOn = null;
+    var _previousNumber = null;
+    var _operationSign = null;
+    var _innerMemory = null;
+    var _errorUnknownKey = 'Key?';
+    var _errorInvalidOperation = "Invalid operation"; //(-4)!, sqrt(-2), 12%0, 13/0
+
+    var _calculations = null;
+    var _result = null;
     function _setDefaultValues() {
         _previousNumber = null;
         _operationSign = null;
@@ -297,6 +305,7 @@ var calculator = (function () {
 })();
 window.onload = function () {
     calculator.run();
+    console.log(calculator);
     var powerKey = document.querySelector('#powerKey');
     powerKey.addEventListener('click', function () {
         var table = document.querySelector('table');
