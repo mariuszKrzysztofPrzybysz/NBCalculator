@@ -13,7 +13,7 @@ var calculator = {
     execute: null,
     calculations: null,
     result: null,
-    del: null,
+    backspace: null,
     isOn: false,
     setDefaultValues: function () {
         this.previousNumber = null;
@@ -46,7 +46,7 @@ var calculator = {
         this.execute = document.querySelector('#executeKey');
         this.calculations = document.querySelector('#historyOfCalculations');
         this.result = document.querySelector('#resultInput');
-        this.del = document.querySelector('#deleteKey');
+        this.backspace = document.querySelector('#backspaceKey');
     },
     eventForResult: function () {
         this.value = '';
@@ -218,7 +218,7 @@ var calculator = {
             calculator.result.value = '';
         }
     },
-    eventForDeleteKey: function () {
+    eventForBackspaceKey: function () {
         calculator.result.value = calculator.result.value.slice(0, -1);
     },
     activateAllEvents: function () {
@@ -243,7 +243,7 @@ var calculator = {
         }
         this.dot.addEventListener('click', this.eventForDotKey, false);
         this.execute.addEventListener('click', this.eventForExecuteKey, false);
-        this.del.addEventListener('click', this.eventForDeleteKey, false);
+        this.backspace.addEventListener('click', this.eventForBackspaceKey, false);
     },
     deactivateAllEvents: function () {
         this.setDefaultValues();
@@ -266,7 +266,7 @@ var calculator = {
         }
         this.dot.removeEventListener('click', this.eventForDotKey, false);
         this.execute.removeEventListener('click', this.eventForExecuteKey, false);
-        this.del.removeEventListener('click', this.eventForDeleteKey, false);
+        this.backspace.removeEventListener('click', this.eventForBackspaceKey, false);
     },
     run: function () {
         this.connectWithAll();
