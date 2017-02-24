@@ -117,6 +117,7 @@ var calculator = {
                 calculator.calculations.value =
                         '(' + number + ')' + '!: ' + calculator.result.value + '\n'
                         + calculator.calculations.value;
+
                 break;
             case 'rootOperator':
                 if (number >= 0) {
@@ -134,7 +135,7 @@ var calculator = {
                 console.log(this.errorUnknownKey);
                 break;
         }
-        calculator.result.value = '';
+        
     },
     eventForDigitKey: function () {
         if (isNaN(calculator.result.value) && calculator.result.value !== "-") {
