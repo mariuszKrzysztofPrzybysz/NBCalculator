@@ -135,7 +135,7 @@ var calculator = {
                 console.log(this.errorUnknownKey);
                 break;
         }
-        
+
     },
     eventForDigitKey: function () {
         if (isNaN(calculator.result.value) && calculator.result.value !== "-") {
@@ -188,14 +188,14 @@ var calculator = {
                 calculator.previousNumber = calculator.toNumber(calculator.result.value);
                 calculator.operationSign = this.innerText;
                 calculator.result.value = '';
-                //calculator.calculations.value = calculator.operationSign
-                //        + '\n'
-                //        + calculator.previousNumber;
             } else {
+                var temp = '(' + calculator.previousNumber + ')'
+                        + calculator.operationSign
+                        + '(' + calculator.result.value + '): ';
                 calculator.previousNumber = calculator.calculateResult(calculator.previousNumber,
                         calculator.operationSign,
                         calculator.toNumber(calculator.result.value));
-                calculator.calculations.value = 'Wynik: ' + calculator.previousNumber
+                calculator.calculations.value = temp + calculator.previousNumber
                         + '\n'
                         + calculator.calculations.value;
                 calculator.result.value = '';
