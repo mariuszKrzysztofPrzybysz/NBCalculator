@@ -305,7 +305,6 @@ var calculator = (function () {
 })();
 window.onload = function () {
     calculator.run();
-    console.log(calculator);
     var powerKey = document.querySelector('#powerKey');
     powerKey.addEventListener('click', function () {
         var table = document.querySelector('table');
@@ -318,4 +317,5 @@ window.onload = function () {
         }
         calculator.isOn = !calculator.isOn;
     }, false);
+    
 };
