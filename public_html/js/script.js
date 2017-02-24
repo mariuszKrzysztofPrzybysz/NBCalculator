@@ -4,28 +4,30 @@
  *  GitHub     : https://github.com/mariuszKrzysztofPrzybysz
  */
 
-var calculator = {
-    memory: null,
-    dyadicOperator: null,
-    binaryOperator: null,
-    digit: null,
-    dot: null,
-    execute: null,
-    calculations: null,
-    result: null,
-    backspace: null,
-    isOn: false,
-    setDefaultValues: function () {
-        this.previousNumber = null;
-        this.operationSign = null;
-        this.innerMemory = null;
-        this.errorUnknownKey = 'Key?';
-        this.errorInvalidOperation = "Invalid operation"; //(-4)!, sqrt(-2), 12%0, 13/0
+var calculator = (function () {
 
-        this.calculations.value = '';
-        calculator.result.value = '';
-    },
-    toNumber: function (value) {
+    var _memory = null;
+    var _dyadicOperator = null;
+    var _binaryOperator = null;
+    var _digit = null;
+    var _dot = null;
+    var _execute = null;
+    var _calculations = null;
+    var _result = null;
+    var _backspace = null;
+    var _isOn = null;
+    function _setDefaultValues() {
+        _previousNumber = null;
+        _operationSign = null;
+        _innerMemory = null;
+        _errorUnknownKey = 'Key?';
+        _errorInvalidOperation = "Invalid operation"; //(-4)!, sqrt(-2), 12%0, 13/0
+
+        _calculations.value = '';
+        _result.value = '';
+    }
+    ;
+    function _toNumber(value) {
         //Funkcja zwraca albo null albo liczbę
         if (typeof (value) === 'string') {
             if (isNaN(value) === false) {
@@ -36,70 +38,74 @@ var calculator = {
             return value;
         } else
             return null;
-    },
-    connectWithAll: function () {
-        this.memory = document.querySelectorAll('.memoryKey');
-        this.dyadicOperator = document.querySelectorAll('.dyadicOperatorKey');
-        this.binaryOperator = document.querySelectorAll('.binaryOperatorKey');
-        this.digit = document.querySelectorAll('.digitKey');
-        this.dot = document.querySelector('#dotKey');
-        this.execute = document.querySelector('#executeKey');
-        this.calculations = document.querySelector('#historyOfCalculations');
-        this.result = document.querySelector('#resultInput');
-        this.backspace = document.querySelector('#backspaceKey');
-    },
-    eventForResult: function () {
+    }
+    ;
+    function _connectWithAll() {
+        _memory = document.querySelectorAll('.memoryKey');
+        _dyadicOperator = document.querySelectorAll('.dyadicOperatorKey');
+        _binaryOperator = document.querySelectorAll('.binaryOperatorKey');
+        _digit = document.querySelectorAll('.digitKey');
+        _dot = document.querySelector('#dotKey');
+        _execute = document.querySelector('#executeKey');
+        _calculations = document.querySelector('#historyOfCalculations');
+        _result = document.querySelector('#resultInput');
+        _backspace = document.querySelector('#backspaceKey');
+    }
+    ;
+    function _eventForResult() {
         this.value = '';
-    },
-    eventForOperations: function () {
+    }
+    ;
+    function _eventForOperations() {
         this.value = '';
-    },
-    eventForMemoryKey: function () {
+    }
+    ;
+    function _eventForMemoryKey() {
         switch (this.innerText) {
             case "MR":
-                if (calculator.innerMemory === null) {
-                    calculator.innerMemory = calculator.toNumber(calculator.result.value);
-                    calculator.result.value = '';
+                if (_innerMemory === null) {
+                    _innerMemory = _toNumber(_result.value);
+                    _result.value = '';
                 } else {
-                    calculator.result.value = calculator.innerMemory;
+                    _result.value = _innerMemory;
                 }
                 break;
             case "MC":
-                calculator.innerMemory = null;
-                //calculator.calculations.value = '';
+                _innerMemory = null;
                 break;
             case "M+":
-                if (isNaN(calculator.result.value) === false) {
-                    if (calculator.innerMemory === null) {
-                        calculator.innerMemory = 0;
+                if (isNaN(_result.value) === false) {
+                    if (_innerMemory === null) {
+                        _innerMemory = 0;
                     }
-                    calculator.innerMemory += calculator.toNumber(calculator.result.value);
+                    _innerMemory += _toNumber(_result.value);
                 }
                 break;
             case "M-":
-                if (isNaN(calculator.result.value) === false) {
-                    if (calculator.innerMemory === null) {
-                        calculator.innerMemory = 0;
+                if (isNaN(_result.value) === false) {
+                    if (_innerMemory === null) {
+                        _innerMemory = 0;
                     }
-                    calculator.innerMemory -= calculator.toNumber(calculator.result.value);
+                    _innerMemory -= _toNumber(_result.value);
                 }
                 break;
             default:
-                console.log(this.errorUnknownKey);
+                console.log(_errorUnknownKey);
                 break;
         }
-        if (calculator.innerMemory !== null) {
-            calculator.calculations.value
-                    = 'Pamięć: ' + calculator.innerMemory + '\n'
-                    + calculator.calculations.value;
+        if (_innerMemory !== null) {
+            _calculations.value
+                    = 'Pamięć: ' + _innerMemory + '\n'
+                    + _calculations.value;
         } else {
-            calculator.calculations.value
+            _calculations.value
                     = 'Pamięć: wyczyszczono' + '\n'
-                    + calculator.calculations.value;
+                    + _calculations.value;
         }
-    },
-    eventForDyadicOperatorKey: function () {
-        var number = calculator.toNumber(calculator.result.value);
+    }
+    ;
+    function _eventForDyadicOperatorKey() {
+        var number = _toNumber(_result.value);
         switch (this.id) {
             case 'factorialOperator':
                 //Badanie, czy number jest liczbą naturalną
@@ -109,48 +115,50 @@ var calculator = {
                     for (var i = 1; i <= number; i++) {
                         r *= i;
                     }
-                    calculator.result.value = r;
+                    _result.value = r;
                 } else {
-                    calculator.result.value = calculator.errorInvalidOperation;
+                    _result.value = _errorInvalidOperation;
                 }
                 //Wydruk operacji postaci (number)!: result
-                calculator.calculations.value =
-                        '(' + number + ')' + '!: ' + calculator.result.value + '\n'
-                        + calculator.calculations.value;
-
+                _calculations.value =
+                        '(' + number + ')' + '!: ' + _result.value + '\n'
+                        + _calculations.value;
                 break;
             case 'rootOperator':
                 if (number >= 0) {
                     //Liczenie pierwiastka kwadratowego z liczby nieujemnej
-                    calculator.result.value = calculator.toNumber(Math.sqrt(number));
+                    _result.value = _toNumber(Math.sqrt(number));
                 } else {
-                    calculator.result.value = calculator.errorInvalidOperation;
+                    _result.value = _errorInvalidOperation;
                 }
                 //Wydruk operacji postaci sqrt(number): result
-                calculator.calculations.value = this.innerText + '(' + number + ')' + ': '
-                        + calculator.result.value + '\n'
-                        + calculator.calculations.value;
+                _calculations.value = this.innerText + '(' + number + ')' + ': '
+                        + _result.value + '\n'
+                        + _calculations.value;
                 break;
             default:
                 console.log(this.errorUnknownKey);
                 break;
         }
 
-    },
-    eventForDigitKey: function () {
-        if (isNaN(calculator.result.value) && calculator.result.value !== "-") {
-            calculator.result.value = this.innerText;
+    }
+    ;
+    function _eventForDigitKey() {
+        if (isNaN(_result.value) && _result.value !== "-") {
+            _result.value = this.innerText;
         }
-        calculator.result.value += this.innerText;
-    },
-    eventForDotKey: function () {
-        if (calculator.result.value === "") {
-            calculator.result.value = "0.";
-        } else if (calculator.result.value.indexOf(".") === -1) {
-            calculator.result.value += ".";
+        _result.value += this.innerText;
+    }
+    ;
+    function _eventForDotKey() {
+        if (_result.value === "") {
+            _result.value = "0.";
+        } else if (_result.value.indexOf(".") === -1) {
+            _result.value += ".";
         }
-    },
-    calculateResult: function (firstNumber, operationSign, secondNumber) {
+    }
+    ;
+    function _calculateResult(firstNumber, operationSign, secondNumber) {
         switch (operationSign) {
             case '%':
                 if (Math.floor(firstNumber) === firstNumber
@@ -158,12 +166,12 @@ var calculator = {
                         && secondNumber !== 0) {
                     return firstNumber % secondNumber;
                 }
-                return calculator.errorInvalidOperation;
+                return _errorInvalidOperation;
             case '/':
                 if (secondNumber !== 0) {
                     return firstNumber / secondNumber;
                 }
-                return calculator.errorInvalidOperation;
+                return _errorInvalidOperation;
             case '*':
                 return firstNumber * secondNumber;
             case '-':
@@ -171,107 +179,122 @@ var calculator = {
             case '+':
                 return firstNumber + secondNumber;
             default:
-                return calculator.errorUnknownKey;
+                return _errorUnknownKey;
         }
-    },
-    eventForBinaryOperatorKey: function () {
-        if (calculator.result.value === calculator.errorInvalidOperation
-                || calculator.result.value === calculator.errorUnknownKey) {
-            calculator.result.value = '';
+    }
+    ;
+    function _eventForBinaryOperatorKey() {
+        if (_result.value === _errorInvalidOperation
+                || _result.value === _errorUnknownKey) {
+            _result.value = '';
         }
-        if (calculator.result.value === '') {
+        if (_result.value === '') {
             if (this.innerText === '-') {
-                calculator.result.value = '-';
+                _result.value = '-';
             }
         } else {
-            if (calculator.previousNumber === null) {
-                calculator.previousNumber = calculator.toNumber(calculator.result.value);
-                calculator.operationSign = this.innerText;
-                calculator.result.value = '';
+            if (_previousNumber === null) {
+                _previousNumber = _toNumber(_result.value);
+                _operationSign = this.innerText;
+                _result.value = '';
             } else {
-                var temp = '(' + calculator.previousNumber + ')'
-                        + calculator.operationSign
-                        + '(' + calculator.result.value + '): ';
-                calculator.previousNumber = calculator.calculateResult(calculator.previousNumber,
-                        calculator.operationSign,
-                        calculator.toNumber(calculator.result.value));
-                calculator.calculations.value = temp + calculator.previousNumber
+                var temp = '(' + _previousNumber + ')'
+                        + _operationSign
+                        + '(' + _result.value + '): ';
+                _previousNumber = _calculateResult(_previousNumber,
+                        _operationSign,
+                        _toNumber(_result.value));
+                _calculations.value = temp + _previousNumber
                         + '\n'
-                        + calculator.calculations.value;
-                calculator.result.value = '';
-                calculator.operationSign = this.innerText;
+                        + _calculations.value;
+                _result.value = '';
+                _operationSign = this.innerText;
             }
         }
-    },
-    eventForExecuteKey: function () {
-        if (calculator.previousNumber !== null
-                && calculator.operationSign !== null
-                && !isNaN(calculator.result.value)) {
-            var temp = '(' + calculator.previousNumber + ')'
-                        + calculator.operationSign
-                        + '(' + calculator.result.value + '): ';
-            calculator.calculations.value = temp + calculator.calculateResult(calculator.previousNumber,
-                    calculator.operationSign,
-                    calculator.toNumber(calculator.result.value));
-            calculator.previousNumber = null;
-            calculator.operationSign = null;
-            calculator.result.value = '';
-        }
-    },
-    eventForBackspaceKey: function () {
-        calculator.result.value = calculator.result.value.slice(0, -1);
-    },
-    activateAllEvents: function () {
-        this.setDefaultValues();
-        this.result.addEventListener('dblclick', this.eventForResult, false);
-        this.calculations.addEventListener('dblclick', this.eventForOperations, false);
-        for (var index = 0; index < this.memory.length; index++) {
-            this.memory[index].addEventListener('click',
-                    this.eventForMemoryKey, false);
-        }
-        for (var index = 0; index < this.dyadicOperator.length; index++) {
-            this.dyadicOperator[index].addEventListener('click',
-                    this.eventForDyadicOperatorKey, false);
-        }
-        for (var index = 0; index < this.binaryOperator.length; index++) {
-            this.binaryOperator[index].addEventListener('click',
-                    this.eventForBinaryOperatorKey, false);
-        }
-        for (var index = 0; index < this.digit.length; index++) {
-            this.digit[index].addEventListener('click',
-                    this.eventForDigitKey, false);
-        }
-        this.dot.addEventListener('click', this.eventForDotKey, false);
-        this.execute.addEventListener('click', this.eventForExecuteKey, false);
-        this.backspace.addEventListener('click', this.eventForBackspaceKey, false);
-    },
-    deactivateAllEvents: function () {
-        this.setDefaultValues();
-        this.result.removeEventListener('dblclick', this.eventForResult, false);
-        this.calculations.removeEventListener('dblclick', this.eventForOperations, false);
-        for (var index = 0; index < this.memory.length; index++) {
-            this.memory[index].removeEventListener('click',
-                    this.eventForMemoryKey, false);
-        }
-        for (var index = 0; index < this.dyadicOperator.length; index++) {
-            this.dyadicOperator[index].removeEventListener('click',
-                    this.eventForDyadicOperatorKey, false);
-        }
-        for (var index = 0; index < this.binaryOperator.length; index++) {
-            this.binaryOperator[index].removeEventListener('click',
-                    this.eventForBinaryOperatorKey, false);
-        }
-        for (var index = 0; index < this.digit.length; index++) {
-            this.digit[index].removeEventListener('click', this.eventForDigitKey, false);
-        }
-        this.dot.removeEventListener('click', this.eventForDotKey, false);
-        this.execute.removeEventListener('click', this.eventForExecuteKey, false);
-        this.backspace.removeEventListener('click', this.eventForBackspaceKey, false);
-    },
-    run: function () {
-        this.connectWithAll();
     }
-};
+    ;
+    function _eventForExecuteKey() {
+        if (_previousNumber !== null
+                && _operationSign !== null
+                && !isNaN(_result.value)) {
+            var temp = '(' + _previousNumber + ')'
+                    + _operationSign
+                    + '(' + _result.value + '): ';
+            _calculations.value = temp + _calculateResult(_previousNumber,
+                    _operationSign,
+                    _toNumber(_result.value));
+            _previousNumber = null;
+            _operationSign = null;
+            _result.value = '';
+        }
+    }
+    ;
+    function _eventForBackspaceKey() {
+        _result.value = _result.value.slice(0, -1);
+    }
+    ;
+    function _activateAllEvents() {
+        _setDefaultValues();
+        _result.addEventListener('dblclick', _eventForResult, false);
+        _calculations.addEventListener('dblclick', _eventForOperations, false);
+        for (var index = 0; index < _memory.length; index++) {
+            _memory[index].addEventListener('click',
+                    _eventForMemoryKey, false);
+        }
+        for (var index = 0; index < _dyadicOperator.length; index++) {
+            _dyadicOperator[index].addEventListener('click',
+                    _eventForDyadicOperatorKey, false);
+        }
+        for (var index = 0; index < _binaryOperator.length; index++) {
+            _binaryOperator[index].addEventListener('click',
+                    _eventForBinaryOperatorKey, false);
+        }
+        for (var index = 0; index < _digit.length; index++) {
+            _digit[index].addEventListener('click',
+                    _eventForDigitKey, false);
+        }
+        _dot.addEventListener('click', _eventForDotKey, false);
+        _execute.addEventListener('click', _eventForExecuteKey, false);
+        _backspace.addEventListener('click', _eventForBackspaceKey, false);
+    }
+    ;
+    function _deactivateAllEvents() {
+        _setDefaultValues();
+        _result.removeEventListener('dblclick', _eventForResult, false);
+        _calculations.removeEventListener('dblclick', _eventForOperations, false);
+        for (var index = 0; index < _memory.length; index++) {
+            _memory[index].removeEventListener('click',
+                    _eventForMemoryKey, false);
+        }
+        for (var index = 0; index < _dyadicOperator.length; index++) {
+            _dyadicOperator[index].removeEventListener('click',
+                    _eventForDyadicOperatorKey, false);
+        }
+        for (var index = 0; index < _binaryOperator.length; index++) {
+            _binaryOperator[index].removeEventListener('click',
+                    _eventForBinaryOperatorKey, false);
+        }
+        for (var index = 0; index < _digit.length; index++) {
+            _digit[index].removeEventListener('click', _eventForDigitKey, false);
+        }
+        _dot.removeEventListener('click', _eventForDotKey, false);
+        _execute.removeEventListener('click', _eventForExecuteKey, false);
+        _backspace.removeEventListener('click', _eventForBackspaceKey, false);
+    }
+    ;
+    function _run() {
+        _connectWithAll();
+    }
+    ;
+//wszystko co zwracam staje się dostępne na zewnątrz,
+//cała reszta będzie ukryta dla zewnętrznego środowiska
+    return {
+        run: _run,
+        activateAllEvents: _activateAllEvents,
+        deactivateAllEvents: _deactivateAllEvents,
+        isOn: _isOn
+    };
+})();
 window.onload = function () {
     calculator.run();
     var powerKey = document.querySelector('#powerKey');
