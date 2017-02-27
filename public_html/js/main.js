@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function(){
     calculator.run();
     var powerKey = document.querySelector('#powerKey');
     powerKey.addEventListener('click', function () {
-        var table = document.querySelector('table');
+        var table = document.querySelector('.calculator');
         if (!calculator.isOn) {
             calculator.activateAllEvents();
             table.classList.add('on');
