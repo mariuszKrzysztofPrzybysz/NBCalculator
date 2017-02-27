@@ -21,7 +21,7 @@ and open the template in the editor.
     font-size: 1.1em;
 }
 
-.calculator  .on {
+.calculator.on {
     color: white;
 }
 
