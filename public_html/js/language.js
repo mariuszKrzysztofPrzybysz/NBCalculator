@@ -58,10 +58,10 @@ var Language = (function () {
         };
     })();
     var _fr = (function () {
-        var _MR = '';
-        var _MC = '';
-        var _MPlus = '';
-        var _MMinus = '';
+        var _MR = "Enregistrement du chiffre qui s'affiche sur l'écran dans la mémoire et sa lecture";
+        var _MC = "Nettoyage de la mémoire et de l'histoire des opérations";
+        var _MPlus = "Addition du chiffre s'affichant sur l'écran au chiffre dans la mémoire";
+        var _MMinus = "Soustraction du chiffre sur l'écran de celui qui se trouve dans la mémoire";
 
         var _getMR = function () {
             return _MR;
@@ -110,10 +110,10 @@ var Language = (function () {
         };
     })();
     var _ru = (function () {
-        var _MR = '';
-        var _MC = '';
-        var _MPlus = '';
-        var _MMinus = '';
+        var _MR = "Записывание номера, расположенного в памяти дисплея и его чтение";
+        var _MC = "Очистка памяти и истории оперций";
+        var _MPlus = "Добавление к обсчету в памяти обсчета который  отображается на данный момент на екране";
+        var _MMinus = "Вычитание от обсчета в памяти, обсчета который отображается на данный момент на экране";
 
         var _getMR = function () {
             return _MR;
@@ -143,14 +143,3 @@ var Language = (function () {
         ru: _ru
     };
 })();
-
-console.log(Language['pl'].getMPlus());
-console.log(Language.pl.getMMinus());
-console.log(Language.pl['getMMinus']);
-
-if (typeof (Storage) !== 'undefined') {
-    localStorage.setItem('calculatorLanguage', 'pl');
-}
-console.log(localStorage.getItem('calculatorLanguage'));
-localStorage.removeItem('calculatorLanguage');
-console.log(localStorage.getItem('calculatorLanguage'));

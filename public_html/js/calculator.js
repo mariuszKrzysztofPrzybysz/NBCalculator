@@ -3,7 +3,6 @@
  *  Author     : Mariusz Krzysztof Przybysz
  *  GitHub     : https://github.com/mariuszKrzysztofPrzybysz
  */
-
 var calculator = (function () {
 
     var _memory = null;
@@ -303,19 +302,3 @@ var calculator = (function () {
         isOn: _isOn
     };
 })();
-window.onload = function () {
-    calculator.run();
-    var powerKey = document.querySelector('#powerKey');
-    powerKey.addEventListener('click', function () {
-        var table = document.querySelector('table');
-        if (!calculator.isOn) {
-            calculator.activateAllEvents();
-            table.classList.add('on');
-        } else {
-            table.classList.remove('on');
-            calculator.deactivateAllEvents();
-        }
-        calculator.isOn = !calculator.isOn;
-    }, false);
-    
-};

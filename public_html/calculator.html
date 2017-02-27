@@ -19,10 +19,23 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/style.css" />
         <script type="text/javascript" src="js/language.js"></script>
-        <script type="text/javascript" src="js/script.js"></script>
+        <script type="text/javascript" src="js/calculator.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
     </head>
     <body>
         <table>
+            <thead><tr><th colspan="5" style="text-align: center">Wybierz język</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><img src="img/flags/pl.png" alt="pl" style="width: 25px;"/></td>
+                    <td><img src="img/flags/gb.png" alt="gb" style="width: 25px;"/></td>
+                    <td><img src="img/flags/ru.png" alt="ru" style="width: 25px;"/></td>
+                    <td><img src="img/flags/fr.png" alt="fr" style="width: 25px;"/></td>
+                    <td><img src="img/flags/de.png" alt="de" style="width: 25px;"/></td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="calculator">
             <thead>
                 <tr>
                     <td colspan="4"><input id="resultInput" type="text" title="Kliknij dwuktrotnie aby wyczyścić" readonly/></td>
@@ -79,8 +92,16 @@ and open the template in the editor.
                 </tr>
             </tfoot>
         </table>
-        
-        <span>Test</span>
-        
+        <div class="language-container" style="margin: 0 auto; width:  100%; text-align: center;">
+            <div class="selected-language">Język</div>
+            <ul style="list-style: none;">
+                <li>pl</li>
+                <li>en</li>
+                <li>ru</li>
+                <li>fr</li>
+                <li>de</li>
+                
+            </ul>
+        </div>
     </body>
 </html>
